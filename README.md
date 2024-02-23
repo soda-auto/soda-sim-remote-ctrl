@@ -3,8 +3,8 @@
 The SODA.Sim approach for remote control of the simulator involves the use of the standard UnrealEngine [Remote Control]  (https://docs.unrealengine.com/5.3/en-US/remote-control-for-unreal-engine/) plugin. To make sure that Remote Control plugin is connected to your UnrealEngine project, see [Quick Start](https://docs.unrealengine.com/5.3/en-US/remote-control-api-websocket-reference-for-unreal-engine/).
 This repository is just an HTTP Python client for [Remote Control](https://docs.unrealengine.com/5.3/en-US/remote-control-for-unreal-engine/) implementing [Remote Control API HTTP](https ://docs.unrealengine.com/5.3/en-US/remote-control-api-http-reference-for-unreal-engine/) and several convenient classes for quickly starting to work with SODA.Sim through this protocol.
 
-[!IMPORTANT]  
-If you are using a packaged UnrealEngine project (i.e. without an editor), then to use the Remote Control server you need to run the UnrealEngine project with the **-RCWebControlEnable** flag.
+> [!IMPORTANT]  
+> If you are using a packaged UnrealEngine project (i.e. without an editor), then to use the Remote Control server you need to run the UnrealEngine project with the **-RCWebControlEnable** flag.
 
 ## Pythin API Overview  
 Base classes:
@@ -21,10 +21,10 @@ The UE4API is a implementation of the [Remote Control API HTTP](https://docs.unr
   - ``UE4API.req_object_describe(...)``
   - ``UE4API.req_remote_batch(...)`` 
 
-[!TIP]
-There is a ability to print HTTP requests JSON content for debugging. To do this, set the appropriateoptions of UE4API:
-  - ``UE4API.print_request``
-  - ``UE4API.print_response``
+> [!TIP]
+> There is a ability to print HTTP requests JSON content for debugging. To do this, set the appropriateoptions of UE4API:
+>   - ``UE4API.print_request``
+>   - ``UE4API.print_response``
 
 ### UObject Class
 The python UObject is reflection of the UnrealEngine C++/Blueprint UObject. Allows to read and write properties and call methods of the origin UnrealEngine UObject:
