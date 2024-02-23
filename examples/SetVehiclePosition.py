@@ -10,13 +10,12 @@ if __name__ == "__main__":
     async def main():
         await sim.update_default_objects(ue4api.session)
         active_vehicle = await sim.get_active_vehicle(ue4api.session)
-        component_by_name = await active_vehicle.get_component_by_name(
-            ue4api.session, object_name="SimCamera90Front"
+        await active_vehicle.set_position(
+            ue4api.session,
+            {"X": -679, "Y": 537, "Z": 65},
+            {"Yaw": 45, "Pitch": 0, "Roll": 0},
         )
-        await component_by_name.setter.Width(ue4api.session, 600)
-        await component_by_name.setter.Height(ue4api.session, 800)
-        await active_vehicle.respawn(ue4api.session)
-        ue4api.session.close()
+        await ue4api.session.close()
 
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())

@@ -14,7 +14,7 @@ if __name__ == "__main__":
             ue4api.session, object_name="SimCamera90Front"
         )
         await component_by_name.call.Toggle(ue4api.session)
-        ue4api.session.close()
+        await ue4api.session.close()
 
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())

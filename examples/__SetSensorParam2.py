@@ -16,8 +16,7 @@ if __name__ == "__main__":
         await component_by_name.setter.ColorPublisher(
             ue4api.session, {"ColorPublisher": {"Addr": "tcp://*:8889"}}
         )
-        await active_vehicle.respawn(ue4api.session)
-        ue4api.session.close()
+        await ue4api.session.close()
 
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())
