@@ -1,10 +1,10 @@
 # SODA.Sim Remote Control
 
-The SODA.Sim approach for remote control of the simulator involves the use of the standard UnrealEngine [Remote Control](https://docs.unrealengine.com/5.3/en-US/remote-control-for-unreal-engine/) plugin. To make sure that Remote Control plugin is connected to your UnrealEngine project, see [Quick Start](https://docs.unrealengine.com/5.3/en-US/remote-control-api-websocket-reference-for-unreal-engine/).
+The SODA.Sim approach for remote control of the simulator involves the use of the standard UnrealEngine [Remote Control](https://docs.unrealengine.com/5.3/en-US/remote-control-for-unreal-engine/) plugin. Make sure that the Remote Control plugin is included to your UnrealEngine project, see [Quick Start](https://docs.unrealengine.com/5.3/en-US/remote-control-api-websocket-reference-for-unreal-engine/).
 This repository is just an HTTP Python client for [Remote Control](https://docs.unrealengine.com/5.3/en-US/remote-control-for-unreal-engine/) implementing [Remote Control API HTTP](https://docs.unrealengine.com/5.3/en-US/remote-control-api-http-reference-for-unreal-engine/) and several convenient classes for quickly starting to work with SODA.Sim through this protocol.
 
 > [!IMPORTANT]  
-> If you are using a packaged UnrealEngine project (i.e. without an editor), then to use the Remote Control server you need to run the UnrealEngine project with the **-RCWebControlEnable** flag.
+> If you are using a packaged UnrealEngine project (i.e. without the Unreal Editor), then to use the Remote Control server you need to run the UnrealEngine project with the **-RCWebControlEnable** flag.
 
 ## Pythin API Overview  
 Base classes:
@@ -14,7 +14,7 @@ Base classes:
   - ``Simulator``
   
 ### UE4API Class 
-The UE4API is a implementation of the [Remote Control API HTTP](https://docs.unrealengine.com/5.3/en-US/remote-control-api-http-reference-for-unreal-engine/) protocol based on the aiohttp library. This is a simple and small class that simply implements all the endpoints according to the protocol:
+The UE4API is a implementation of the [Remote Control API HTTP](https://docs.unrealengine.com/5.3/en-US/remote-control-api-http-reference-for-unreal-engine/) protocol based on the aiohttp library. This is a simple and small class that simply implements all the endpoints according to the HTTP protocol:
   - ``UE4API.req_object_call(...)``
   - ``UE4API.req_object_property(...)``
   - ``UE4API.req_search_assets(...)``
@@ -36,7 +36,7 @@ The python UObject is reflection of the UnrealEngine C++/Blueprint UObject. Allo
     Example: ``await some_obj.getter.TestProperty(session, some_value)``;  
 
 ### SodaVehicle Class
-It based on UObject class and contains several helper and most commonly used methods:
+It based on the python UObject class and contains several helper and most commonly used methods:
   - ``SodaVehicle.respawn(...)``
   - ``SodaVehicle.respawn_from_class(...)``
   - ``SodaVehicle.respawn_from_slot(...)``
@@ -58,7 +58,7 @@ from soda_sim_remote_ctrl.Simulator import Simulator
 from soda_sim_remote_ctrl.UE4API import UE4API
 
 if __name__ == "__main__":
-    ue4api = UE4API()
+    ue4api = UE4API(url="http://127.0.0.1:30010")
     sim = Simulator(ue4api)
 
     async def main():
@@ -81,7 +81,7 @@ from soda_sim_remote_ctrl.Simulator import Simulator
 from soda_sim_remote_ctrl.UE4API import UE4API
 
 if __name__ == "__main__":
-    ue4api = UE4API()
+    ue4api = UE4API(url="http://127.0.0.1:30010")
     sim = Simulator(ue4api)
 
     async def main():
