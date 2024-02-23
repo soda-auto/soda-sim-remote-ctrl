@@ -1,7 +1,7 @@
 # SODA.Sim Remote Control
 
-The SODA.Sim approach for remote control of the simulator involves the use of the standard UnrealEngine [Remote Control] (https://docs.unrealengine.com/5.3/en-US/remote-control-for-unreal-engine/) plugin. To make sure that Remote Control plugin is connected to your UnrealEngine project, see [Quick Start](https://docs.unrealengine.com/5.3/en-US/remote-control-api-websocket-reference-for-unreal-engine/).
-This repository is just an HTTP Python client for [Remote Control](https://docs.unrealengine.com/5.3/en-US/remote-control-for-unreal-engine/) implementing [Remote Control API HTTP](https ://docs.unrealengine.com/5.3/en-US/remote-control-api-http-reference-for-unreal-engine/) and several convenient classes for quickly starting to work with SODA.Sim through this protocol.
+The SODA.Sim approach for remote control of the simulator involves the use of the standard UnrealEngine [Remote Control](https://docs.unrealengine.com/5.3/en-US/remote-control-for-unreal-engine/) plugin. To make sure that Remote Control plugin is connected to your UnrealEngine project, see [Quick Start](https://docs.unrealengine.com/5.3/en-US/remote-control-api-websocket-reference-for-unreal-engine/).
+This repository is just an HTTP Python client for [Remote Control](https://docs.unrealengine.com/5.3/en-US/remote-control-for-unreal-engine/) implementing [Remote Control API HTTP](https://docs.unrealengine.com/5.3/en-US/remote-control-api-http-reference-for-unreal-engine/) and several convenient classes for quickly starting to work with SODA.Sim through this protocol.
 
 > [!IMPORTANT]  
 > If you are using a packaged UnrealEngine project (i.e. without an editor), then to use the Remote Control server you need to run the UnrealEngine project with the **-RCWebControlEnable** flag.
