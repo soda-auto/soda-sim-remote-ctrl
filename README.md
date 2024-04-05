@@ -6,6 +6,12 @@ This repository is just an HTTP Python client for [Remote Control](https://docs.
 > [!IMPORTANT]  
 > If you are using a packaged UnrealEngine project (i.e. without the Unreal Editor), then to use the Remote Control server you need to run the UnrealEngine project with the **-RCWebControlEnable** flag.
 
+> [!TIP]
+> Set enviroment variable PYTHONPATH=<PATH_TO_SODA_SIM_REMOTE_CTRL_REPO> to use locally.
+
+> [!TIP]
+> The web server's address is set to 127.0.0.1 by default, which is only accessible to the computer running the Unreal Engine session. To allow other devices to access your Unreal session through the Remote Control API, change the [DefaultBindAddress](https://docs.unrealengine.com/5.3/en-US/remote-control-quick-start-for-unreal-engine/) in your project's DefaultEngine.ini.
+
 ## Pythin API Overview  
 Base classes:
   - ``UE4API`` 
