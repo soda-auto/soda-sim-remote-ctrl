@@ -19,14 +19,13 @@ class Simulator():
         self.soda_statics = UObject(ue4api, "/Script/UnrealSoda.Default__SodaStatics")
         self.level_state_static = UObject(ue4api, "/Script/UnrealSoda.Default__LevelState")
         self.vehicle_static = UObject(ue4api, "/Script/UnrealSoda.Default__SodaVehicle")
-        self.game_mode_static = UObject(ue4api, "/Script/UnrealSoda.Default__SodaGameModeComponent")
 
         # Base UE static objects
         self.game_user_settings = UObject(ue4api, "/Script/Engine.Default__GameUserSettings")
         self.gameplay_statics = UObject(ue4api, "/Script/Engine.Default__GameplayStatics")
 
         # Base soda gameplay objects
-        self.soda_game_mode = None
+        self.soda_subsystem = None
         self.soda_user_settings = None
         self.level_state = None
         self.actor_factory = None
@@ -45,15 +44,15 @@ class Simulator():
             return ret
 
     async def update_default_objects(self, session):
-        self.soda_game_mode = None
+        self.soda_subsystem = None
         self.level_state = None
         self.actor_factory = None
-        resp1 = asyncio.create_task(self.soda_statics.call.FindAllObjectsByClass(session, Class="/Script/UnrealSoda.SodaGameModeComponent"))
+        resp1 = asyncio.create_task(self.soda_statics.call.FindAllObjectsByClass(session, Class="/Script/UnrealSoda.SodaSubsystem"))
         resp2 = asyncio.create_task(self.soda_statics.call.FindAllObjectsByClass(session, Class="/Script/UnrealSoda.LevelState"))
         resp3 = asyncio.create_task(self.soda_statics.call.GetSodaUserSettings(session))
         done, pending = await asyncio.wait({resp1, resp2, resp3})
         assert (len(pending) == 0)
-        self.soda_game_mode = self.paths_to_uobjects(resp1.result()["ReturnValue"], only_first=True)
+        self.soda_subsystem = self.paths_to_uobjects(resp1.result()["ReturnValue"], only_first=True)
         self.level_state = self.paths_to_uobjects(resp2.result()["ReturnValue"], only_first=True)
         self.soda_user_settings = UObject(self.ue4api, resp3.result()["ReturnValue"])
         self.actor_factory = UObject(self.ue4api, (await self.level_state.getter.ActorFactory(session))["ActorFactory"])
@@ -66,23 +65,23 @@ class Simulator():
             return None
 
     async def app_quit(self, session, force=True):
-        await self.soda_game_mode.call.RequestQuit(session, bForce=force)
+        await self.soda_subsystem.call.RequestQuit(session, bForce=force)
         
     async def restart_level(self, session, force=True):
-        await self.soda_game_mode.call.RequestRestartLevel(session, bForce=force)
+        await self.soda_subsystem.call.RequestRestartLevel(session, bForce=force)
         
     async def scenario_play(self, session):
-        await self.soda_game_mode.call.ScenarioPlay(session)    
+        await self.soda_subsystem.call.ScenarioPlay(session)    
         
     async def scenario_stop(self, session):
-        await self.soda_game_mode.call.ScenarioStop(session, Reason="UserRequest")  
+        await self.soda_subsystem.call.ScenarioStop(session, Reason="UserRequest")  
         
     async def spawn_actor(self, session, class_path, transform):
         new_actor = UObject(
             self.ue4api, (
                 await self.gameplay_statics.call.BeginDeferredActorSpawnFromClass(
                     session,
-                    WorldContextObject=self.soda_game_mode.object_path,
+                    WorldContextObject=self.soda_subsystem.object_path,
                     ActorClass=class_path,
                     SpawnTransform=transform.to_json()
                 ))["ReturnValue"]
@@ -141,7 +140,7 @@ class Simulator():
         return ret
 
     async def get_active_vehicle(self, session):
-        path = (await self.soda_game_mode.call.GetActiveVehicle(session))["ReturnValue"]
+        path = (await self.soda_subsystem.call.GetActiveVehicle(session))["ReturnValue"]
         return SodaVehicle(self.ue4api, path) if len(path) else None
 
     async def spawn_vehicle(self, session, address, location=FVector(0,0,0), rotation=FRotator(0,0,0), posses=True, desire_name=""):
